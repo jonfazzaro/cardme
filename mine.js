@@ -20,8 +20,15 @@ module.exports = async function (context) {
         const permalink = reminder.text
         const m = await message(permalink);
         const u = await user(m.user);
-        await createCard(`Respond to ${u.real_name}`, `> ${m.text}\n\n${permalink}`);
+        await createCard(
+            `Respond to ${u.real_name}`,
+            `> ${m.text}\n\n${permalink}`,
+            timestampToEpoch(reminder.time));
         return await complete(reminder.id);
+    }
+
+    function timestampToEpoch(value) {
+        return value * 1000;
     }
 
     async function message(permalink) {
@@ -73,7 +80,7 @@ module.exports = async function (context) {
             .catch(err => context.log(err));
     }
 
-    async function createCard(name, desc) {
+    async function createCard(name, desc, due) {
         context.log("createCard");
         return await fetch("https://api.trello.com/1/cards", {
             headers: { "Content-Type": "application/json" },
@@ -83,7 +90,8 @@ module.exports = async function (context) {
                 key: process.env.trelloKey,
                 idList: process.env.targetListID,
                 name: name,
-                desc: desc
+                desc: desc,
+                due: due
             })
         }).catch(err => context.log(err));
     }
