@@ -8,7 +8,6 @@ module.exports = async function (context) {
     context.done();
 
     function filtered(reminders) {
-        context.log("filtered");
         return _.chain(reminders)
             .filter(r => r.complete_ts == 0)
             .sortBy(r => r.time)
@@ -16,7 +15,6 @@ module.exports = async function (context) {
     }
 
     async function card(reminder) {
-        context.log("card");
         const permalink = reminder.text
         const m = await message(permalink);
         const u = await user(m.user);
@@ -81,7 +79,6 @@ module.exports = async function (context) {
     }
 
     async function createCard(name, desc, due) {
-        context.log("createCard");
         return await fetch("https://api.trello.com/1/cards", {
             headers: { "Content-Type": "application/json" },
             method: "POST",
