@@ -31,6 +31,10 @@ describe("The miner", () => {
         expect(_mocked.slack.reminders.complete).not.toHaveBeenCalledWith(7654);
     });
 
+    it("signals to the context that it's done", () => {
+        expect(_mocked.context.done).toHaveBeenCalled();
+    })
+
     function arrange(reminders) {
         _mocked.trello.createCard.mockReturnValue(Promise.resolve());
         _mocked.slack.reminders.get.mockReturnValue(Promise.resolve({ reminders }));
