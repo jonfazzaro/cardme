@@ -12,7 +12,6 @@ module.exports = async function (context) {
     function filtered(reminders) {
         return _.chain(reminders)
             .filter(r => r.complete_ts == 0)
-            .sortBy(r => r.time)
             .value();
     }
 
@@ -22,7 +21,7 @@ module.exports = async function (context) {
         const user = await slack.user(message.user);
 
         await trello.createCard(
-            `Respond to ${user.real_name}`,
+                `Respond to ${user.real_name}`,
             `> ${message.text}\n\n${permalink}`,
             timestampToEpoch(reminder.time));
 
