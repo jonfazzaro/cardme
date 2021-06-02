@@ -1,7 +1,7 @@
 jest.mock('./slack');
 jest.mock('./trello');
 
-const mine = require("./mine");
+const mine = require("./index");
 const slack = require("./slack");
 const trello = require("./trello");
 

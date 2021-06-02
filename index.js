@@ -1,3 +1,5 @@
+const _ = require("lodash")
+
 module.exports = async function (context) {
 
     const slack = require("./slack")(context);
@@ -8,7 +10,10 @@ module.exports = async function (context) {
     context.done();
 
     function filtered(reminders) {
-        return reminders.filter(r => r.complete_ts == 0)
+        return _.chain(reminders)
+            .filter(r => r.complete_ts == 0)
+            .sortBy(r => r.time)
+            .value();
     }
 
     async function toTrelloCard(reminder) {
