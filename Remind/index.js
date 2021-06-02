@@ -3,7 +3,7 @@ const _ = require("lodash")
 module.exports = async function (context) {
 
     const slack = require("./slack")(context);
-    const trello = require("./trello")(context);
+    const trello = require("../trello")(context);
 
     const result = await slack.reminders.get();
     await Promise.all(filtered(result.reminders).map(toTrelloCard));
