@@ -1,4 +1,4 @@
-#  Remind Me (for real)
+# Card Me
 
 I kept not checking my Slack reminders. So I made **an Azure Function that turns them into Trello cards**.
 
