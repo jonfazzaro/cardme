@@ -14,13 +14,13 @@ describe("The miner", () => {
     it("creates a card for each reminder", () => {
         expect(_mocked.trello.createCard)
             .toHaveBeenCalledWith(
-                "Respond to Mr. 12345",
+                "Respond: Mr. 12345",
                 "> 234\n\nhttps://link.to.message/234",
                 987654320000);
 
         expect(_mocked.trello.createCard)
             .toHaveBeenCalledWith(
-                "Respond to Mr. 12345",
+                "Respond: Mr. 12345",
                 "> 123\n\nhttps://link.to.message/123",
                 987654321000);
     });

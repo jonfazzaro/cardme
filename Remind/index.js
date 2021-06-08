@@ -22,7 +22,7 @@ module.exports = async function (context) {
         const user = await slack.user(message.user);
 
         await trello.createCard(
-            `Respond to ${user.real_name}`,
+            `Respond: ${user.real_name}`,
             `> ${message.text}\n\n${permalink}`,
             timestampToEpoch(reminder.time));
 
