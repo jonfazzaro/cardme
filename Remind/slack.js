@@ -60,9 +60,12 @@ function slack(context) {
     }
 
     async function slack(command, parameters, method) {
-        const url = `https://slack.com/api/${command}?token=${process.env.slackToken}&${parameters}`;
+        const url = `https://slack.com/api/${command}?${parameters}`;
         return await fetch(url, {
-            method: method || "GET"
+            method: method || "GET",
+            headers: {
+                'Authorization': `Bearer ${process.env.slackToken}`
+            }
         })
             .then(r => r.json())
             .catch(err => context.log(err));
