@@ -2,28 +2,33 @@ const _ = require("lodash")
 
 module.exports = async function (context) {
 
-    const slack = require("./slack")(context);
     const trello = require("./trello")(context);
-
-    const result = await slack.reminders.get();
-    await Promise.all(filtered(result.reminders).map(toTrelloCard));
+    const slack = require("./slack")(context);
+    
+    const reminders = await getReminders();
+    await Promise.all(await reminders.map(toTrelloCard));
     context.done();
+    
+    async function getReminders() {
+        const result = await slack.reminders.get();
+        return await Promise.all(
+            _.chain(result.reminders)
+                .filter(r => r.complete_ts == 0)
+                .sortBy(r => r.time)
+                .map(expanded)
+                .value());
 
-    function filtered(reminders) {
-        return _.chain(reminders)
-            .filter(r => r.complete_ts == 0)
-            .sortBy(r => r.time)
-            .value();
+        async function expanded(reminder) {
+            const message = await slack.message(reminder.text);
+            const user = await slack.user(message.user);
+            return { ...reminder, message, user };
+        }
     }
 
     async function toTrelloCard(reminder) {
-        const permalink = reminder.text;
-        const message = await slack.message(permalink);
-        const user = await slack.user(message.user);
-
         await trello.createCard(
-            `Respond: ${user.real_name}`,
-            `> ${message.text}\n\n${permalink}`,
+            `Respond: ${reminder.user.real_name}`,
+            `> ${reminder.message.text}\n\n${reminder.text}`,
             timestampToEpoch(reminder.time));
 
         return await slack.reminders.complete(reminder.id);
