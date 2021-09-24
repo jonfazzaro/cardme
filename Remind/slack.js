@@ -1,6 +1,6 @@
 const fetch = require("node-fetch");
 
-function slack(context) {
+function slack(context, token) {
 
     return {
         reminders: {
@@ -64,7 +64,7 @@ function slack(context) {
         return await fetch(url, {
             method: method || "GET",
             headers: {
-                'Authorization': `Bearer ${process.env.slackToken}`
+                'Authorization': `Bearer ${token}`
             }
         })
             .then(r => r.json())
