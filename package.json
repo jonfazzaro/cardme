@@ -6,8 +6,8 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "test": "jest",
-    "tdd": "jest --watchAll"
+    "test": "npx jest",
+    "tdd": "npx jest --watchAll"
   },
   "dependencies": {
     "lodash": "^4.17.20",
