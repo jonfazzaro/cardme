@@ -1,6 +1,3 @@
-jest.mock("./slack");
-jest.mock("./trello");
-
 const mine = require("./index");
 const slack = require("./slack");
 const trello = require("./trello");
@@ -8,7 +5,7 @@ const trello = require("./trello");
 describe("The miner", () => {
   beforeEach(async () => {
     arrange(_mocked.reminders);
-    arrangeTokens("toke;en");
+    arrangeTokens("toke;en;nope");
     await mine(_mocked.context);
   });
 
@@ -133,3 +130,7 @@ const _mocked = {
 
 slack.mockReturnValue(_mocked.slack);
 trello.mockReturnValue(_mocked.trello);
+
+jest.mock("./slack");
+jest.mock("./trello");
+

@@ -8,7 +8,7 @@ module.exports = async function (context) {
     await Promise.all(tokens.map(async t => {
         const slack = require("./slack")(context, t);
         const reminders = await getReminders(slack);
-        await Promise.all(await reminders.map(toTrelloCard));
+        await Promise.all(reminders.map(toTrelloCard));
         await complete(slack, reminders);
     }));
 
@@ -17,8 +17,8 @@ module.exports = async function (context) {
     async function getReminders(slack) {
         const result = await slack.reminders.get();
         return await Promise.all(
-            _.chain(result.reminders)
-                .filter(r => r.complete_ts == 0)
+            _.chain((result || {reminders:[]}).reminders)
+                .filter(r => r.complete_ts === 0)
                 .sortBy(r => r.time)
                 .map(expanded)
                 .value());
