@@ -7,9 +7,11 @@
   "license": "ISC",
   "scripts": {
     "test": "npx jest",
-    "tdd": "npx jest --watchAll"
+    "tdd": "npx jest --watchAll",
+    "make": "node make.js"
   },
   "dependencies": {
+    "dotenv": "^16.0.3",
     "lodash": "^4.17.20",
     "node-fetch": "^2.6.1"
   },
