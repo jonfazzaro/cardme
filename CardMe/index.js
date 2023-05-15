@@ -17,7 +17,7 @@ module.exports = async function (context) {
     async function getReminders(slack) {
         const result = await slack.reminders.get();
         return await Promise.all(
-            _.chain((result || {reminders:[]}).reminders)
+            _.chain(result.reminders || [])
                 .filter(r => r.complete_ts === 0)
                 .sortBy(r => r.time)
                 .map(expanded)

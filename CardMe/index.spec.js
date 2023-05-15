@@ -75,6 +75,9 @@ describe("The miner", () => {
     _mocked.slack.reminders.get.mockReturnValueOnce(
       Promise.resolve({ reminders: reminders["en"] })
     );
+    _mocked.slack.reminders.get.mockReturnValueOnce(
+        Promise.resolve({ reminders: undefined })
+    );
     _mocked.slack.message.mockImplementation(url => {
       const tokens = url.split("/");
       const last = tokens[tokens.length - 1];
