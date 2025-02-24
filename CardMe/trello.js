@@ -2,10 +2,10 @@ const fetch = require("node-fetch");
 
 function trello(context) {
     return {
-        createCard: createCard
+        post
     }
 
-    async function createCard(name, desc, due) {
+    async function post(name, desc, due) {
         return await fetch("https://api.trello.com/1/cards", {
             headers: { "Content-Type": "application/json" },
             method: "POST",

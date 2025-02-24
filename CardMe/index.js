@@ -2,13 +2,13 @@ const _ = require("lodash")
 
 module.exports = async function (context) {
 
-    const trello = require("./trello")(context);
+    const cards = require("./trello")(context);
     
     const tokens = process.env.slackToken.split(';');
     await Promise.all(tokens.map(async t => {
         const slack = require("./slack")(context, t);
         const reminders = await getReminders(slack);
-        await Promise.all(reminders.map(toTrelloCard));
+        await Promise.all(reminders.map(toPostedCard));
         await complete(slack, reminders);
     }));
 
@@ -35,8 +35,8 @@ module.exports = async function (context) {
         }
     }
 
-    async function toTrelloCard(reminder) {
-        return await trello.createCard(
+    async function toPostedCard(reminder) {
+        return await cards.post(
             `Respond: ${reminder.user.real_name}`,
             `> ${reminder.message.text}\n\n${reminder.text}`,
             timestampToEpoch(reminder.time));

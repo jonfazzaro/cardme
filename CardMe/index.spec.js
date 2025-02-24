@@ -1,8 +1,8 @@
 const mine = require("./index");
 const slack = require("./slack");
-const trello = require("./trello");
+const cards = require("./trello");
 
-describe("The miner", () => {
+describe("The cardme function", () => {
   beforeEach(async () => {
     arrange(_mocked.reminders);
     arrangeTokens("toke;en;nope");
@@ -14,20 +14,20 @@ describe("The miner", () => {
     expect(slack).toHaveBeenCalledWith(_mocked.context, "en");
   });
 
-  it("creates a card for each reminder", () => {
-    expect(_mocked.trello.createCard).toHaveBeenCalledWith(
+  it("posts a card for each reminder", () => {
+    expect(_mocked.cards.post).toHaveBeenCalledWith(
       "Respond: Mr. 12345",
       "> 234\n\nhttps://link.to.message/234",
       987654320000
     );
 
-    expect(_mocked.trello.createCard).toHaveBeenCalledWith(
+    expect(_mocked.cards.post).toHaveBeenCalledWith(
       "Respond: Mr. 12345",
       "> 123\n\nhttps://link.to.message/123",
       987654321000
     );
 
-    expect(_mocked.trello.createCard).toHaveBeenCalledWith(
+    expect(_mocked.cards.post).toHaveBeenCalledWith(
       "Respond: Mr. 12345",
       "> 555\n\nhttps://link.to.message/555",
       987654325000
@@ -43,7 +43,7 @@ describe("The miner", () => {
     });
 
     it("uses the username from the message", () => {
-      expect(_mocked.trello.createCard).toHaveBeenCalledWith(
+      expect(_mocked.cards.post).toHaveBeenCalledWith(
         "Respond: 12345",
         "> 555\n\nhttps://link.to.message/555",
         987654325000
@@ -67,8 +67,8 @@ describe("The miner", () => {
   }
 
   function arrange(reminders) {
-    _mocked.trello.createCard.mockReturnValue(Promise.resolve());
-    _mocked.trello.createCard.mockReset();
+    _mocked.cards.post.mockReturnValue(Promise.resolve());
+    _mocked.cards.post.mockReset();
     _mocked.slack.reminders.get.mockReturnValueOnce(
       Promise.resolve({ reminders: reminders["toke"] })
     );
@@ -98,7 +98,7 @@ const _mocked = {
     message: jest.fn(),
     user: jest.fn(),
   },
-  trello: { createCard: jest.fn() },
+  cards: { post: jest.fn() },
   context: { log: jest.fn(), done: jest.fn() },
   reminders: {
     toke: [
@@ -132,7 +132,7 @@ const _mocked = {
 };
 
 slack.mockReturnValue(_mocked.slack);
-trello.mockReturnValue(_mocked.trello);
+cards.mockReturnValue(_mocked.cards);
 
 jest.mock("./slack");
 jest.mock("./trello");
