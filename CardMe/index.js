@@ -24,14 +24,8 @@ module.exports = async function (context) {
                 .value());
 
         async function expanded(reminder) {
-            const message = await slack.message(reminder.text);
-            const user = await userFrom(message);
+            const {message, user} = await slack.message(reminder.text);
             return { ...reminder, message, user };
-        }
-
-        async function userFrom(message) {
-            let user = await slack.user(message.user);
-            return user || { real_name : message.user }; 
         }
     }
 

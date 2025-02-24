@@ -38,23 +38,6 @@ describe("The cardme function", () => {
     );
   });
 
-  describe("given no user", () => {
-    beforeEach(async () => {
-      arrange(_mocked.reminders);
-      arrangeTokens("toke;en");
-      _mocked.slack.user.mockImplementation(_ => Promise.resolve(undefined));
-      await mine(_mocked.context);
-    });
-
-    it("uses the username from the message", () => {
-      expect(_mocked.cards.post).toHaveBeenCalledWith(
-        "Respond: 12345",
-        "> 555\n\nhttps://link.to.message/555",
-        987654325000
-      );
-    });
-  });
-
   it("marks each incomplete reminder complete", () => {
     expect(_mocked.slack.reminders.complete).toHaveBeenCalledWith(9876);
     expect(_mocked.slack.reminders.complete).toHaveBeenCalledWith(8765);
@@ -85,11 +68,8 @@ describe("The cardme function", () => {
     _mocked.slack.message.mockImplementation(url => {
       const tokens = url.split("/");
       const last = tokens[tokens.length - 1];
-      return Promise.resolve({ text: last, user: 12345 });
+      return Promise.resolve({ message: { text: last, user: 12345 }, user: { real_name: `Mr. 12345` }});
     });
-    _mocked.slack.user.mockImplementation(id =>
-      Promise.resolve({ real_name: `Mr. ${id}` })
-    );
   }
 });
 

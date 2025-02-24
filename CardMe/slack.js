@@ -20,7 +20,14 @@ function slack(context, token) {
             await slack("conversations.replies", threadedMessageParameters(permalink)) :
             await slack("conversations.history", messageParameters(permalink));
 
-        return response.messages[0];
+        const message = response.messages[0];
+        const user = await userFrom(message);
+        return {message, user};
+    }
+
+    async function userFrom(message) {
+        let u = await user(message.user);
+        return u || {real_name: message.user};
     }
 
     function isThreadedMessage(permalink) {
