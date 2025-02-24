@@ -2,7 +2,7 @@ const _ = require("lodash")
 
 module.exports = async function (context) {
 
-    const cards = require("./trello")(context);
+    const cards = require(`./${process.env.target}`)(context);
     
     const tokens = process.env.slackToken.split(';');
     await Promise.all(tokens.map(async t => {

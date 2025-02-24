@@ -1,6 +1,10 @@
+jest.mock("./slack");
+jest.mock(`./trello`);
+
+process.env.target = 'trello'
+const cards = require(`./${process.env.target}`);
 const mine = require("./index");
 const slack = require("./slack");
-const cards = require("./trello");
 
 describe("The cardme function", () => {
   beforeEach(async () => {
@@ -133,7 +137,4 @@ const _mocked = {
 
 slack.mockReturnValue(_mocked.slack);
 cards.mockReturnValue(_mocked.cards);
-
-jest.mock("./slack");
-jest.mock("./trello");
 
