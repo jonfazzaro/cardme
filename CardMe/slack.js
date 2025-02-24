@@ -31,11 +31,11 @@ function slack(context, token) {
         const pathElements = permalink.substring(8).split('/');
         const channel = pathElements[2];
 
-        var ts = pathElements[3].substring(0, pathElements[3].indexOf('?'));
+        let ts = pathElements[3].substring(0, pathElements[3].indexOf('?'));
         ts = ts.substring(0, ts.length - 6) + '.' + ts.substring(ts.length - 6);
 
-        var latest = pathElements[3].substring(pathElements[3].indexOf('thread_ts=') + 10);
-        if (latest.indexOf('&') != -1) latest = latest.substring(0, latest.indexOf('&'));
+        let latest = pathElements[3].substring(pathElements[3].indexOf('thread_ts=') + 10);
+        if (latest.indexOf('&') !== -1) latest = latest.substring(0, latest.indexOf('&'));
 
         return `channel=${channel}&ts=${ts}&latest=${latest}&inclusive=true&limit=1`;
     }
@@ -44,8 +44,8 @@ function slack(context, token) {
         const pathElements = permalink.substring(8).split('/');
         const channel = pathElements[2];
 
-        var latest = pathElements[3].substring(1);
-        if (latest.indexOf('?') != -1) latest = latest.substring(0, latest.indexOf('?'));
+        let latest = pathElements[3].substring(1);
+        if (latest.indexOf('?') !== -1) latest = latest.substring(0, latest.indexOf('?'));
         latest = latest.substring(0, latest.length - 6) + '.' + latest.substring(latest.length - 6);
         return `channel=${channel}&latest=${latest}&inclusive=true&limit=1`;
     }
@@ -71,6 +71,6 @@ function slack(context, token) {
             .catch(err => context.log(err));
     }
 
-};
+}
 
 module.exports = slack;
