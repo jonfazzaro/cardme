@@ -8,7 +8,7 @@ main();
 async function main() {
     await compressor.minify({
         compressor: 'terser',
-        input: "./CardMeShortcut/shortcut.js",
+        input: "./Shortcut/shortcut.js",
         output: "/dev/null",
     }).then(minified => {
         console.log("javascript:" + encodeUrl(withKeys(minified)));

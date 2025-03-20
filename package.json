@@ -9,7 +9,7 @@
     "test": "npx jest",
     "tdd": "npx jest --watchAll",
     "make": "node make.js",
-    "compile": "node CardMeShortcut/compile.js"
+    "compile": "node Shortcut/compile.js"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
