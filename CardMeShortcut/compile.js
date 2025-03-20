@@ -9,7 +9,7 @@ async function main() {
     await compressor.minify({
         compressor: 'terser',
         input: "./CardMeShortcut/shortcut.js",
-        output: "./CardMeShortcut/shortcut.min.js",
+        output: "/dev/null",
     }).then(minified => {
         console.log("javascript:" + encodeUrl(withKeys(minified)));
     }).catch(err => console.error(err));
