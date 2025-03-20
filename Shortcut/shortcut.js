@@ -33,9 +33,9 @@ function toTrelloCard(element) {
     }
 
     function messageUrl(key) {
-        return "https://app.slack.com/client/"
-            + process.env.slackClient
-            + "/archives/"
+        return "https://" 
+            + "excella"
+            + ".slack.com/archives/"
             + key.split("_")[0].replace("-", "/p").replace(".", "");
     }
 
