@@ -8,7 +8,8 @@
   "scripts": {
     "test": "npx jest",
     "tdd": "npx jest --watchAll",
-    "make": "node make.js"
+    "make": "node make.js",
+    "compile": "node CardMeShortcut/compile.js"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
@@ -17,6 +18,8 @@
   },
   "devDependencies": {
     "jest": "^29.7.0",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "minify": "^13.0.0",
+    "encodeurl": "^2.0.0"
   }
 }
