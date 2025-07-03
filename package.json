@@ -12,6 +12,7 @@
     "compile": "node Shortcut/compile.js"
   },
   "dependencies": {
+    "@node-minify/core": "^9.0.2",
     "dotenv": "^16.0.3",
     "lodash": "^4.17.20",
     "node-fetch": "^2.6.1"

@@ -7,7 +7,7 @@ main();
 
 async function main() {
     await compressor.minify({
-        compressor: 'terser',
+        compressor: 'uglify-es',
         input: "./Shortcut/shortcut.js",
         output: "/dev/null",
     }).then(minified => {
