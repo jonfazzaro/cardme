@@ -34,7 +34,7 @@ function toTrelloCard(element) {
 
     function messageUrl(key) {
         return "https://" 
-            + "excella"
+            + "opensesame"
             + ".slack.com/archives/"
             + key.split("_")[0].replace("-", "/p").replace(".", "");
     }
