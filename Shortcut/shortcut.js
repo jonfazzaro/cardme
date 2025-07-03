@@ -2,7 +2,7 @@ Promise.all(laters().map(toTrelloCard)).then(reportResults);
 
 function toTrelloCard(element) {
     return addTrelloCard(parseMessage(element))
-        .then(res => completeReminder(element))
+        .then(_ => completeReminder(element))
         .catch(err => console.log(err));
 
     function addTrelloCard(message) {
