@@ -1,7 +1,7 @@
 const compressor = require('node-minify');
-const encodeUrl = require("encodeurl");
-const dotenv = require("dotenv");
-const fs = require('fs')
+const encodeUrl = require('encodeurl');
+const dotenv = require('dotenv');
+const fs = require('fs');
 
 dotenv.config();
 main();
@@ -17,16 +17,18 @@ async function main() {
 }
 
 async function minified(script) {
-  await compressor.minify({
-    compressor: 'uglify-es',
-    content: script,
-    // output: "/dev/null",
-  }).then(minified => {
-    console.log("javascript:" + encodeUrl(withKeys(minified)));
-  }).catch(err => console.error(err));
+  await compressor
+    .minify({
+      compressor: 'uglify-es',
+      content: script,
+      // output: "/dev/null",
+    })
+    .then((minified) => {
+      console.log('javascript:' + encodeUrl(withKeys(minified)));
+    })
+    .catch((err) => console.error(err));
 }
 
 function withKeys(minified) {
-  return minified.replace(/process\.env\.(\w+)/g,
-    (_, key) => `"${process.env[key]}"`);
+  return minified.replace(/process\.env\.(\w+)/g, (_, key) => `"${process.env[key]}"`);
 }
