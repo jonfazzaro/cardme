@@ -9,7 +9,7 @@
     "test": "npx jest",
     "tdd": "npx jest --watchAll",
     "make": "node make.js",
-    "compile": "node Shortcut/compile.js"
+    "compile": "node Shortcut/compile.js | pbcopy"
   },
   "dependencies": {
     "@node-minify/core": "^9.0.2",
