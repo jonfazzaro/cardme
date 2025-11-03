@@ -23,7 +23,7 @@ function toTrelloCard(element) {
   function parseMessage(element) {
     return {
       sender: text(element, '.p-activity_ia4_page__item__senders'),
-      text: '> ' + text(element, '.p-activity_ia4_page__item__message'),
+      text: '> ' + text(element, '.p-activity_ia4_page__item__message, .p-rich_text_section'),
       url: messageUrl(element.getAttribute('data-item-key')),
     };
   }
