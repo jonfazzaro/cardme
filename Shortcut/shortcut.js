@@ -42,7 +42,9 @@ function toTrelloCard(element) {
 }
 
 function laters() {
-  return Array.from(document.querySelectorAll('.p-saved_for_later_page__list_wrapper .c-virtual_list__item'));
+  return Array.from(
+    document.querySelectorAll('.p-saved_for_later_page__list_wrapper .c-virtual_list__item'))
+      .filter(e => !!e.querySelectorAll('.p-activity_ia4_page__item__message').length);
 }
 
 function reportResults(cards) {
