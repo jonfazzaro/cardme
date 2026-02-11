@@ -48,6 +48,14 @@ function laters() {
 }
 
 function reportResults(cards) {
+  report(results(cards))
+}
+
+function results(cards) {
   const count = cards.length || 'No';
-  completion(count + ' response cards added!');
+  return count + ' response cards added!';
+}
+
+function report(message) {
+  document.title = message;
 }
