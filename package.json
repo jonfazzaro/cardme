@@ -12,20 +12,13 @@
     "compile": "node Shortcut/compile.js | pbcopy"
   },
   "dependencies": {
-    "@node-minify/core": "^10.4.0",
     "dotenv": "^16.0.3",
     "lodash": "^4.17.20",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
-    "encodeurl": "^2.0.0",
     "jest": "^29.7.0",
-    "node-minify": "^3.6.0",
     "nodemon": "^2.0.7",
     "prettier": "^3.6.2"
-  },
-  "overrides": {
-    "@babel/core": "7.23.2",
-    "@babel/traverse": "7.23.2"
   }
 }

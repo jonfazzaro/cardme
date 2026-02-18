@@ -1,5 +1,3 @@
-const compressor = require('node-minify');
-const encodeUrl = require('encodeurl');
 const dotenv = require('dotenv');
 const fs = require('fs');
 
@@ -14,19 +12,6 @@ async function main() {
   // const script = await minified();
   const script = readScript();
   console.log(script);
-}
-
-async function minified(script) {
-  await compressor
-    .minify({
-      compressor: 'uglify-es',
-      content: script,
-      // output: "/dev/null",
-    })
-    .then((minified) => {
-      console.log('javascript:' + encodeUrl(withKeys(minified)));
-    })
-    .catch((err) => console.error(err));
 }
 
 function withKeys(minified) {
