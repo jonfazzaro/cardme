@@ -1,4 +1,5 @@
-Promise.all(laters().map(toTrelloCard)).then(reportResults).catch(completion);
+report('Carding...');
+Promise.all(laters().map(toTrelloCard)).then(reportResults).catch(reportError);
 
 function toTrelloCard(element) {
   return addTrelloCard(parseMessage(element))
@@ -42,13 +43,17 @@ function toTrelloCard(element) {
 }
 
 function laters() {
-  return Array.from(
-    document.querySelectorAll('.p-saved_for_later_page__list_wrapper .c-virtual_list__item'))
-      .filter(e => !!e.querySelectorAll('.p-activity_ia4_page__item__message').length);
+  return Array.from(document.querySelectorAll('.p-saved_for_later_page__list_wrapper .c-virtual_list__item')).filter(
+    (e) => !!e.querySelectorAll('.p-activity_ia4_page__item__message').length,
+  );
 }
 
 function reportResults(cards) {
-  report(results(cards))
+  report(results(cards));
+}
+
+function reportError(err) {
+  report(err.message);
 }
 
 function results(cards) {
