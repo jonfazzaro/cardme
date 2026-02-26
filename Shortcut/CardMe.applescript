@@ -4,9 +4,7 @@ on run {input, parameters}
 	set js to read POSIX file (homeDir & "scripts/cardme.js")
 
 	tell application "Safari"
-		tell front document
-			do JavaScript js
-		end tell
+		tell front document to do JavaScript js
 
 		delay 1
 		repeat
