@@ -1,19 +1,26 @@
 on run {input, parameters}
 
-	set homeDir to POSIX path of (path to home folder)
-	set js to read POSIX file (homeDir & "scripts/cardme.js")
+  set homeDir to POSIX path of (path to home folder)
+  set js to read POSIX file (homeDir & "scripts/cardme.js")
 
-	tell application "Safari"
-		tell front document to do JavaScript js
+  tell application "Safari"
 
-		delay 1
-		repeat
-			if name of front document is not "Carding..." then exit repeat
-			delay 0.5
-		end repeat
+    tell front document to repeat
+      do JavaScript "document.readyState"
+     	if the result = "complete" then exit repeat
+     	delay 0.5
+   	end repeat
 
-		set result to name of front document
-	end tell
+    tell front document to do JavaScript js
 
-	return result
+    delay 1
+    repeat
+      if name of front document is not "Carding..." then exit repeat
+      delay 0.5
+    end repeat
+
+    set result to name of front document
+  end tell
+
+  return result
 end run
