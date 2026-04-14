@@ -16,7 +16,7 @@ function toTrelloCard(element, env = process.env, fetchFn = fetch) {
         token: env.trelloToken,
         key: env.trelloKey,
         idList: env.targetListID,
-        name: 'Respond: ' + message.sender,
+        name: `Respond: ${message.sender}`,
         desc: message.text,
         urlSource: message.url,
       }),
@@ -26,7 +26,7 @@ function toTrelloCard(element, env = process.env, fetchFn = fetch) {
   function parseMessage(element) {
     return {
       sender: text(element, '[data-qa=message_sender_name]'),
-      text: '> ' + text(element, '[data-qa=activity-item-message]'),
+      text: `> ${text(element, '[data-qa=activity-item-message]')}`,
       url: messageUrl(element.getAttribute('data-item-key')),
     };
   }
