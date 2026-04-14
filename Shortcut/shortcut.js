@@ -3,13 +3,13 @@ if (typeof document !== 'undefined') {
   Promise.all(laters().map(toTrelloCard)).then(reportResults).catch(reportError);
 }
 
-function toTrelloCard(element, env = process.env) {
+function toTrelloCard(element, env = process.env, fetchFn = fetch) {
   return addTrelloCard(parseMessage(element))
     .then((_) => completeReminder(element))
     .catch((err) => console.log(err));
 
   function addTrelloCard(message) {
-    return fetch('https://api.trello.com/1/cards', {
+    return fetchFn('https://api.trello.com/1/cards', {
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
       body: JSON.stringify({

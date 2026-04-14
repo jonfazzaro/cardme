@@ -2,11 +2,12 @@ const { toTrelloCard } = require('./shortcut');
 
 describe('toTrelloCard', () => {
   let fetchCalls;
+  let fetchFn;
   let env;
 
   beforeEach(() => {
     fetchCalls = [];
-    global.fetch = (url, options) => {
+    fetchFn = (url, options) => {
       fetchCalls.push({ url, options });
       return Promise.resolve({ ok: true });
     };
@@ -18,24 +19,35 @@ describe('toTrelloCard', () => {
     };
   });
 
-  describe('given fetch rejects', () => {
+  describe('given an error', () => {
     let logged;
 
     beforeEach(() => {
       logged = [];
       console.log = (msg) => logged.push(msg);
-      global.fetch = () => Promise.reject(new Error('network failure'));
+      fetchFn = () => Promise.reject(new Error('network failure'));
     });
 
     describe('when toTrelloCard is called', () => {
       it('logs the error', async () => {
-        await toTrelloCard(fakeElement({ sender: 'Bob', message: 'Hi', itemKey: 'C1-1.1_x' }), env);
+        await toTrelloCard(fakeElement({ sender: 'Bob', message: 'Hi', itemKey: 'C1-1.1_x' }), env, fetchFn);
         expect(logged[0].message).toBe('network failure');
       });
 
       it('does not mark the reminder complete', async () => {
         let clicked = false;
-        await toTrelloCard(fakeElement({ sender: 'Bob', message: 'Hi', itemKey: 'C1-1.1_x', onComplete: () => { clicked = true; } }), env);
+        await toTrelloCard(
+          fakeElement({
+            sender: 'Bob',
+            message: 'Hi',
+            itemKey: 'C1-1.1_x',
+            onComplete: () => {
+              clicked = true;
+            },
+          }),
+          env,
+          fetchFn,
+        );
         expect(clicked).toBe(false);
       });
     });
@@ -51,12 +63,14 @@ describe('toTrelloCard', () => {
         sender: 'Alice',
         message: 'Hello there',
         itemKey: 'C0GEQ4EK3-1234567890.123456_D0GEQ4EK3',
-        onComplete: () => { clicked = true; },
+        onComplete: () => {
+          clicked = true;
+        },
       });
     });
 
     describe('when toTrelloCard is called', () => {
-      beforeEach(() => toTrelloCard(element, env));
+      beforeEach(() => toTrelloCard(element, env, fetchFn));
 
       it('posts to the Trello cards API', () => {
         expect(fetchCalls[0].url).toBe('https://api.trello.com/1/cards');
