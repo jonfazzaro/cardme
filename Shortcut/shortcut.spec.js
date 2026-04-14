@@ -18,6 +18,29 @@ describe('toTrelloCard', () => {
     };
   });
 
+  describe('given fetch rejects', () => {
+    let logged;
+
+    beforeEach(() => {
+      logged = [];
+      console.log = (msg) => logged.push(msg);
+      global.fetch = () => Promise.reject(new Error('network failure'));
+    });
+
+    describe('when toTrelloCard is called', () => {
+      it('logs the error', async () => {
+        await toTrelloCard(fakeElement({ sender: 'Bob', message: 'Hi', itemKey: 'C1-1.1_x' }), env);
+        expect(logged[0].message).toBe('network failure');
+      });
+
+      it('does not mark the reminder complete', async () => {
+        let clicked = false;
+        await toTrelloCard(fakeElement({ sender: 'Bob', message: 'Hi', itemKey: 'C1-1.1_x', onComplete: () => { clicked = true; } }), env);
+        expect(clicked).toBe(false);
+      });
+    });
+  });
+
   describe('given a valid Slack element', () => {
     let element;
     let clicked;
