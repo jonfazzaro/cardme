@@ -1,6 +1,8 @@
 if (typeof document !== 'undefined') {
   report('Carding...');
-  Promise.all(laters().map(toTrelloCard)).then(reportResults).catch(reportError);
+  Promise.all(laters().map((message) => toTrelloCard(message)))
+    .then(reportResults)
+    .catch(reportError);
 }
 
 function toTrelloCard(element, env = process.env, fetchFn = fetch) {
@@ -25,8 +27,8 @@ function toTrelloCard(element, env = process.env, fetchFn = fetch) {
 
   function parseMessage(element) {
     return {
-      sender: text(element, '[data-qa=message_sender_name]'),
-      text: `> ${text(element, '[data-qa=activity-item-message]')}`,
+      sender: text(element, qa('message_sender_name')),
+      text: `> ${text(element, qa('activity-item-message'))}`,
       url: messageUrl(element.getAttribute('data-item-key')),
     };
   }
@@ -44,9 +46,13 @@ function toTrelloCard(element, env = process.env, fetchFn = fetch) {
   }
 }
 
+function qa(id) {
+  return `[data-qa=${id}]`;
+}
+
 function laters() {
   return Array.from(document.querySelectorAll('.p-saved_for_later_page__list_wrapper .c-virtual_list__item')).filter(
-    (e) => !!e.querySelectorAll('[data-qa=activity-item-message]').length,
+    (e) => !!e.querySelectorAll(qa('activity-item-message')).length,
   );
 }
 
