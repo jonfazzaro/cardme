@@ -1,7 +1,7 @@
 report('Carding...');
 Promise.all(laters().map(toTrelloCard)).then(reportResults).catch(reportError);
 
-function toTrelloCard(element) {
+function toTrelloCard(element, env = process.env) {
   return addTrelloCard(parseMessage(element))
     .then((_) => completeReminder(element))
     .catch((err) => console.log(err));
@@ -11,9 +11,9 @@ function toTrelloCard(element) {
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
       body: JSON.stringify({
-        token: process.env.trelloToken,
-        key: process.env.trelloKey,
-        idList: process.env.targetListID,
+        token: env.trelloToken,
+        key: env.trelloKey,
+        idList: env.targetListID,
         name: 'Respond: ' + message.sender,
         desc: message.text,
         urlSource: message.url,
