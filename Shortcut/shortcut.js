@@ -5,7 +5,7 @@ if (typeof document !== 'undefined') {
     .catch(reportError);
 }
 
-function toTrelloCard(element, env = process.env, fetchFn = fetch) {
+function toTrelloCard(element, env = {}, fetchFn = fetch) {
   return addTrelloCard(parseMessage(element))
     .then((_) => completeReminder(element))
     .catch((err) => console.log(err));
