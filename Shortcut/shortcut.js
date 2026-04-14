@@ -1,5 +1,7 @@
-report('Carding...');
-Promise.all(laters().map(toTrelloCard)).then(reportResults).catch(reportError);
+if (typeof document !== 'undefined') {
+  report('Carding...');
+  Promise.all(laters().map(toTrelloCard)).then(reportResults).catch(reportError);
+}
 
 function toTrelloCard(element, env = process.env) {
   return addTrelloCard(parseMessage(element))
@@ -64,3 +66,5 @@ function results(cards) {
 function report(message) {
   document.title = message;
 }
+
+if (typeof module !== 'undefined') module.exports = { toTrelloCard };
