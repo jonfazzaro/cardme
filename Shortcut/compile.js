@@ -9,7 +9,6 @@ function readScript() {
 }
 
 async function main() {
-  // const script = await minified();
   const script = readScript();
   console.log(script);
 }

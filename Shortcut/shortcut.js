@@ -23,8 +23,8 @@ function toTrelloCard(element) {
 
   function parseMessage(element) {
     return {
-      sender: text(element, '.p-activity_ia4_page__item__senders'),
-      text: '> ' + text(element, '.p-activity_ia4_page__item__message, .p-rich_text_section'),
+      sender: text(element, '[data-qa=message_sender_name]'),
+      text: '> ' + text(element, '[data-qa=activity-item-message]'),
       url: messageUrl(element.getAttribute('data-item-key')),
     };
   }
@@ -44,7 +44,7 @@ function toTrelloCard(element) {
 
 function laters() {
   return Array.from(document.querySelectorAll('.p-saved_for_later_page__list_wrapper .c-virtual_list__item')).filter(
-    (e) => !!e.querySelectorAll('.p-activity_ia4_page__item__message').length,
+    (e) => !!e.querySelectorAll('[data-qa=activity-item-message]').length,
   );
 }
 
