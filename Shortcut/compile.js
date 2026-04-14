@@ -14,5 +14,5 @@ async function main() {
 }
 
 function withKeys(minified) {
-  return minified.replace(/process\.env\.(\w+)/g, (_, key) => `"${process.env[key]}"`);
+  return minified.replace(/env\.(\w+)/g, (_, key) => `"${process.env[key]}"`);
 }
